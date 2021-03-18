@@ -49,7 +49,7 @@ const Game = ({ username, gameTime, resetGame }) => {
 	}, [gameOver]);
 
 	const handleTouchClick = () => {
-		if (time > 53) {
+		if (time > 0) {
 			console.log(time);
 			setCurrentScore(currentScore + 1);
 
@@ -61,11 +61,11 @@ const Game = ({ username, gameTime, resetGame }) => {
 
 	const startCountdown = () => {
 		setInterval(() => {
-			if (time > 53) {
+			if (time > 0) {
 				setTime(--time);
 			}
 
-			if (time === 53) {
+			if (time === 0) {
 				setGameOver(true);
 			}
 		}, 1000);
@@ -74,7 +74,7 @@ const Game = ({ username, gameTime, resetGame }) => {
 	return (
 		<div className="game">
 			<div className="wrapper">
-				{time > 53 ? (
+				{time > 0 ? (
 					<React.Fragment>
 						<div className="highscore-container margin-small">
 							{highscore > 0 ? (
