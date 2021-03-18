@@ -1,0 +1,27 @@
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	font-size: 1.7rem;
+	font-family: $font-stack-primary;
+	background-color: $color-grey-dark;
+	color: white;
+	height: 100vh;
+}
+
+a {
+	text-decoration: none;
+}
+
+li {
+	list-style-type: none;
+}

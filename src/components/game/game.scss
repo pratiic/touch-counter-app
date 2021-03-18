@@ -1,0 +1,105 @@
+@import "../../sass/variables";
+
+.game {
+	color: $color-text-muted;
+	font-size: 2rem;
+	text-transform: capitalize;
+	margin-top: 2.5rem;
+
+	.wrapper {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-start;
+	}
+
+	.highscore-container {
+		font-size: 1.75rem;
+		color: $color-text-muted;
+		text-align: center;
+
+		span {
+			color: $color-blue;
+		}
+	}
+
+	.timer {
+		font-size: 2rem;
+
+		.countdown {
+			color: $color-blue;
+		}
+	}
+
+	.current-score-container {
+		.current-score {
+			color: $color-blue;
+		}
+	}
+
+	.touch {
+		height: 5rem;
+		width: 5rem;
+		background-color: $color-blue;
+		border-radius: 50%;
+		border: 3px solid $color-grey-lighter;
+		box-shadow: 0 0 3rem 0 rgba(0, 0, 0, 0.85);
+		cursor: pointer;
+		margin-bottom: 8rem;
+
+		&:active {
+			box-shadow: 0 0 2rem 0 rgba(0, 0, 0, 1);
+			transform: scale(0.98);
+		}
+	}
+
+	.total-score-container {
+		span {
+			color: $color-blue;
+			margin-left: 1rem;
+		}
+	}
+
+	.game-over-high-score-container {
+		span {
+			color: $color-blue;
+			margin-left: 1rem;
+		}
+	}
+
+	.custom-button {
+		width: auto;
+		font-size: 1.7rem;
+		color: $color-grey-lighter;
+	}
+
+	.text-big {
+		font-size: 4rem;
+		display: block;
+		text-align: center;
+	}
+
+	.text-medium {
+		font-size: 2.5rem;
+	}
+
+	.lighter {
+		color: $color-grey-lighter;
+	}
+
+	.text-blue {
+		color: $color-blue;
+	}
+
+	.margin-small {
+		margin-bottom: 3rem;
+	}
+
+	.margin-big {
+		margin-bottom: 4rem;
+	}
+
+	.margin-smaller {
+		margin-bottom: 1rem;
+	}
+}

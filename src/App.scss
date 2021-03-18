@@ -1,0 +1,9 @@
+@import "./sass/_variables.scss";
+@import "./sass/_resets.scss";
+@import "./sass/_utils.scss";
+
+.app {
+	height: 100vh;
+	display: grid;
+	grid-template-rows: auto 1fr;
+}

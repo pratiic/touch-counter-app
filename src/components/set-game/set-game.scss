@@ -1,0 +1,65 @@
+@import "../../sass/variables";
+
+.set-game {
+	form {
+		width: 35rem;
+		margin: 5rem auto 0 auto;
+
+		.title {
+			color: $color-grey-lighter;
+			margin-bottom: 4.5rem;
+			text-transform: capitalize;
+			font-size: 2rem;
+		}
+
+		.input-group {
+			width: 100%;
+			margin-bottom: 4rem;
+			position: relative;
+
+			label {
+				display: block;
+				font-size: 1.7rem;
+				color: $color-text-muted;
+				position: absolute;
+				left: 0;
+				top: -2.5rem;
+				text-transform: capitalize;
+			}
+
+			input {
+				width: 100%;
+				background-color: $color-grey-light;
+				outline: none;
+				border: 1px solid $color-text-muted;
+				height: 3.7rem;
+				padding: 0 0.5rem;
+				font-size: 1.7rem;
+				color: $color-grey-lighter;
+				font-family: inherit;
+				border-radius: 5px;
+
+				&:focus {
+					border: 1px solid $color-blue;
+
+					& + label {
+						color: $color-grey-lighter;
+					}
+				}
+			}
+
+			small {
+				color: $color-google-red;
+				display: none;
+
+				&.show {
+					display: block;
+				}
+			}
+		}
+
+		@media screen and (max-width: 500px) {
+			width: 28rem;
+		}
+	}
+}

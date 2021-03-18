@@ -1,0 +1,43 @@
+@import "../../sass/variables";
+
+.custom-button {
+	background-color: transparent;
+	outline: none;
+	border: 1px solid $color-blue;
+	font-size: inherit;
+	font-family: inherit;
+	color: $color-grey-lighter;
+	padding: 0.3rem 1.75rem;
+	border-radius: 5px;
+	text-transform: capitalize;
+	cursor: pointer;
+	width: 100%;
+	margin-top: -1.5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	&:hover {
+		background-color: $color-blue;
+		color: white;
+	}
+
+	&:active {
+		background-color: darken($color-blue, 5%);
+		color: $color-grey-lighter;
+	}
+
+	&.reset {
+		border: 1px solid $color-google-red;
+
+		&:hover {
+			background-color: $color-google-red;
+			color: white;
+		}
+
+		&:active {
+			background-color: darken($color-google-red, 5%);
+			color: $color-grey-lighter;
+		}
+	}
+}
