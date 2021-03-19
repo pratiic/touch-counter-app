@@ -38,17 +38,21 @@
 	}
 
 	.touch {
-		height: 5rem;
-		width: 5rem;
+		height: 5.8rem;
+		width: 5.8rem;
 		background-color: $color-blue;
 		border-radius: 50%;
 		border: 3px solid $color-grey-lighter;
-		box-shadow: 0 0 3rem 0 rgba(0, 0, 0, 0.85);
+		box-shadow: 0.5rem 0.5rem 3rem 0 rgba(0, 0, 0, 0.8),
+			-0.5rem -0.5rem 3rem 0 rgba(0, 0, 0, 0.8);
 		cursor: pointer;
 		margin-bottom: 8rem;
+		outline: none;
+		-webkit-tap-highlight-color: transparent;
 
 		&:active {
-			box-shadow: 0 0 2rem 0 rgba(0, 0, 0, 1);
+			box-shadow: 0.3rem 0.3rem 2rem 0 rgba(0, 0, 0, 1),
+				0.3rem 0.3rem 2rem 0 rgba(0, 0, 0, 1);
 			transform: scale(0.98);
 		}
 	}

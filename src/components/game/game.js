@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import useSound from "use-sound";
 
 import "./game.scss";
+
+import TouchSound from "../../assets/audio/touch-sound.mp3";
 
 import { firestore } from "../../firebase/firebase.utils";
 
@@ -12,6 +15,24 @@ const Game = ({ username, gameTime, resetGame }) => {
 	const [highscore, setHighscore] = useState(0);
 	const [highscorePlayer, setHighscorePlayer] = useState("");
 	const [gameOver, setGameOver] = useState(false);
+	const [comments] = useState({
+		notEvenClose: "come on man, that's not even close",
+		youCanDoBetter: "you can do better",
+		goHomeAndPractice: "i think you should go home and practice",
+		thatsGood: "that's good, do better next time",
+		jesusChrist: "jesus christ, are you even trying?",
+		thatsGottaHurt: "that's gotta hurt",
+		thatsClose: "that's close, beat it next time man",
+		highScoreBeats: [
+			"looks like you beat it, well done",
+			"attaboy, or are you a girl?",
+			"yessssssssss, you did it",
+			"way to go",
+			"great",
+		],
+	});
+	const [play] = useSound(TouchSound);
+
 	// const [touchSound] = useState(
 	// 	new Audio("../../assets/audio/touch-sound.mp3")
 	// );
@@ -59,6 +80,25 @@ const Game = ({ username, gameTime, resetGame }) => {
 		}
 	};
 
+	const playSound = () => {
+		// const touchSound = new Audio("../../assets/audio/touch-sound.mp3");
+		// touchSound.crossOrigin = "anonymus";
+
+		// const playPromise = touchSound.play();
+
+		// if (playPromise !== undefined) {
+		// 	playPromise
+		// 		.then((info) => {
+		// 			console.log(info);
+		// 		})
+		// 		.catch((error) => {
+		// 			console.log(error);
+		// 		});
+		// }
+
+		play();
+	};
+
 	const startCountdown = () => {
 		setInterval(() => {
 			if (time > 0) {
@@ -69,6 +109,29 @@ const Game = ({ username, gameTime, resetGame }) => {
 				setGameOver(true);
 			}
 		}, 1000);
+	};
+
+	const showComment = () => {
+		const difference = highscore - currentScore;
+
+		if (difference > 250) {
+			return comments.jesusChrist;
+		} else if (difference > 150) {
+			return comments.notEvenClose;
+		} else if (difference > 100) {
+			return comments.youCanDoBetter;
+		} else if (difference < 10) {
+			return comments.thatsGottaHurt;
+		} else if (difference < 40) {
+			return comments.thatsClose;
+		} else if (difference <= 50) {
+			return comments.thatsGood;
+		} else if (difference <= 100) {
+			return comments.goHomeAndPractice;
+		} else if (difference < 0) {
+			const randomNum = Math.floor(Math.random() * 5);
+			return comments.highScoreBeats[randomNum];
+		}
 	};
 
 	return (
@@ -99,7 +162,13 @@ const Game = ({ username, gameTime, resetGame }) => {
 								{currentScore}
 							</span>
 						</p>
-						<div className="touch" onClick={handleTouchClick}></div>{" "}
+						<div
+							className="touch"
+							onClick={() => {
+								playSound();
+								handleTouchClick();
+							}}
+						></div>{" "}
 						<Link
 							to="/"
 							className="custom-button reset"
@@ -116,9 +185,10 @@ const Game = ({ username, gameTime, resetGame }) => {
 						<p className="total-score-container text-medium margin-smaller">
 							total score <span>{currentScore}</span>
 						</p>
-						<p className="game-over-high-score-container text-medium margin-big">
+						<p className="game-over-high-score-container text-medium margin-smaller">
 							high score <span>{highscore}</span>
 						</p>
+						<p className="comment margin-big">{showComment()}</p>
 						{/* <CustomButton
 						handleButtonClick={handlePlayAgainButtonClick}
 					>
