@@ -114,6 +114,11 @@ const Game = ({ username, gameTime, resetGame }) => {
 	const showComment = () => {
 		const difference = highscore - currentScore;
 
+		if (difference <= 0) {
+			const randomNum = Math.floor(Math.random() * 5);
+			return comments.highScoreBeats[randomNum];
+		}
+
 		if (difference > 250) {
 			return comments.jesusChrist;
 		} else if (difference > 150) {
@@ -128,9 +133,6 @@ const Game = ({ username, gameTime, resetGame }) => {
 			return comments.thatsGood;
 		} else if (difference <= 100) {
 			return comments.goHomeAndPractice;
-		} else if (difference < 0) {
-			const randomNum = Math.floor(Math.random() * 5);
-			return comments.highScoreBeats[randomNum];
 		}
 	};
 
