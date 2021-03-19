@@ -196,13 +196,18 @@ const Game = ({ username, gameTime, resetGame }) => {
 					>
 						play again
 					</CustomButton> */}
-						<Link
-							to="/"
-							className="custom-button"
-							onClick={resetGame}
-						>
-							play again
-						</Link>
+						<div className="buttons">
+							<Link
+								to="/"
+								className="custom-button reset"
+								onClick={resetGame}
+							>
+								reset
+							</Link>
+							<CustomButton handleButtonClick={replay}>
+								play again
+							</CustomButton>
+						</div>
 					</React.Fragment>
 				)}
 			</div>
