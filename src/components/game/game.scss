@@ -48,7 +48,7 @@
 		box-shadow: 0.5rem 0.5rem 3rem 0 rgba(0, 0, 0, 0.8),
 			-0.5rem -0.5rem 3rem 0 rgba(0, 0, 0, 0.8);
 		cursor: pointer;
-		margin-bottom: 8rem;
+		margin-bottom: 10rem;
 		outline: none;
 		-webkit-tap-highlight-color: transparent;
 
@@ -88,12 +88,6 @@
 
 		&:not(:first-child) {
 			margin-left: 0.7rem;
-		}
-
-		@media screen and (max-width: 415px) {
-			&:last-child {
-				margin-left: 0;
-			}
 		}
 	}
 
