@@ -164,10 +164,7 @@ const Game = ({ username, gameTime, resetGame }) => {
 								{currentScore}
 							</span>
 						</p>
-						<div
-							className="touch"
-							onClick={() => handleTouchClick}
-						></div>{" "}
+						<div className="touch" onClick={handleTouchClick}></div>{" "}
 						<Link
 							to="/"
 							className="custom-button reset"
