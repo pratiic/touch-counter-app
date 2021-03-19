@@ -166,10 +166,7 @@ const Game = ({ username, gameTime, resetGame }) => {
 						</p>
 						<div
 							className="touch"
-							onClick={() => {
-								playSound();
-								handleTouchClick();
-							}}
+							onClick={() => handleTouchClick}
 						></div>{" "}
 						<Link
 							to="/"
