@@ -1,0 +1,48 @@
+@import "../../sass/variables";
+
+.highscores {
+	padding: 2rem 0 0 0;
+	text-align: center;
+	color: $color-grey-lighter;
+
+	.title {
+		font-size: 3rem;
+		color: $color-blue;
+		text-transform: capitalize;
+		margin-bottom: 1.5rem;
+	}
+
+	.highscore {
+		font-size: 1.85rem;
+		color: $color-text-muted;
+		width: fit-content;
+		margin: 0 auto 1rem auto;
+		border: 1px solid $color-blue;
+		border-radius: 5px;
+		padding: 0.4rem 0.7rem;
+
+		span {
+			color: $color-grey-lighter;
+
+			&:not(:last-child) {
+				margin-right: 10rem;
+				color: $color-text-muted;
+			}
+		}
+
+		&:last-of-type {
+			margin-bottom: 2rem;
+		}
+	}
+
+	.alternate {
+		font-size: 2rem;
+		text-transform: capitalize;
+		margin-bottom: 2rem;
+	}
+
+	.custom-button {
+		width: fit-content;
+		margin: 0 auto 0 auto;
+	}
+}

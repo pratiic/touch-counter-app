@@ -7,19 +7,26 @@ import "./App.scss";
 import Header from "./components/header/header";
 import SetGame from "./components/set-game/set-game";
 import Game from "./components/game/game";
+import Highscores from "./components/highscores/highscores";
 
-const App = ({ username }) => {
+const App = ({ username, gameTime }) => {
 	const [gameSet, setGameSet] = useState(false);
+
+	console.log(username, gameTime);
 
 	useEffect(() => {
 		setGameSet(false);
 	}, []);
 
-	const setGame = (username) => {
+	const setGame = () => {
 		setGameSet(true);
 	};
 
 	const resetGame = () => {
+		setGameSet(false);
+	};
+
+	const replay = () => {
 		setGameSet(false);
 	};
 
@@ -37,10 +44,13 @@ const App = ({ username }) => {
 					</Route>
 					<Route path="/game">
 						{gameSet ? (
-							<Game resetGame={resetGame} />
+							<Game resetGame={resetGame} replay={replay} />
 						) : (
 							<Redirect to="/" />
 						)}
+					</Route>
+					<Route path="/highscores">
+						{gameSet ? <Highscores /> : <Redirect to="/" />}
 					</Route>
 				</Switch>
 			</BrowserRouter>
@@ -51,6 +61,7 @@ const App = ({ username }) => {
 const mapStateToProps = (state) => {
 	return {
 		username: state.options.username,
+		gameTime: state.options.time,
 	};
 };
 

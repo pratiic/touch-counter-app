@@ -7,9 +7,15 @@ import { setUsername, setTime } from "../../redux/options/options.actions";
 
 import CustomButton from "../custom-button/custom-button";
 
-const SetGame = ({ setGame, setGameUsername, setGameTime }) => {
-	const [username, setUsername] = useState("unknown");
-	const [time, setTime] = useState(60);
+const SetGame = ({
+	setGame,
+	setGameUsername,
+	setGameTime,
+	gameUsername,
+	gameTime,
+}) => {
+	const [username, setUsername] = useState(gameUsername);
+	const [time, setTime] = useState(gameTime);
 	const [usernameError, setUsernameError] = useState(false);
 	const [timeError, setTimeError] = useState(false);
 
@@ -77,6 +83,13 @@ const SetGame = ({ setGame, setGameUsername, setGameTime }) => {
 	);
 };
 
+const mapStateToProps = (state) => {
+	return {
+		gameUsername: state.options.username,
+		gameTime: state.options.time,
+	};
+};
+
 const mapDispatchToProps = (dispatch) => {
 	return {
 		setGameUsername: (username) => {
@@ -88,4 +101,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(null, mapDispatchToProps)(SetGame);
+export default connect(mapStateToProps, mapDispatchToProps)(SetGame);

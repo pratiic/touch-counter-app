@@ -1,8 +1,8 @@
 import { optionsActionTypes } from "./options.types";
 
 const INITIAL_STATE = {
-	username: "",
-	time: 0,
+	username: "unknown",
+	time: 60,
 };
 
 export const optionsReducer = (state = INITIAL_STATE, action) => {

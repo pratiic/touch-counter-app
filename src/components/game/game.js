@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import useSound from "use-sound";
 
 import "./game.scss";
 
-import TouchSound from "../../assets/audio/touch-sound.mp3";
-
 import { firestore } from "../../firebase/firebase.utils";
+
+import CustomButton from "../../components/custom-button/custom-button";
 
 const Game = ({ username, gameTime, resetGame }) => {
 	const [currentScore, setCurrentScore] = useState(0);
@@ -31,40 +30,40 @@ const Game = ({ username, gameTime, resetGame }) => {
 			"great",
 		],
 	});
-	const [play] = useSound(TouchSound);
-
-	// const [touchSound] = useState(
-	// 	new Audio("../../assets/audio/touch-sound.mp3")
-	// );
+	const [countdownInterval, setCountdownInterval] = useState(null);
 
 	useEffect(() => {
-		const highscoresCollectionRef = firestore.collection("highscores");
+		const scoresCollectionRef = firestore
+			.collection("all-scores")
+			.doc(`${gameTime}`)
+			.collection("scores");
 
-		highscoresCollectionRef.onSnapshot((snapshot) => {
-			highscoresCollectionRef
-				.doc(`${gameTime}`)
+		scoresCollectionRef.onSnapshot((snapshot) => {
+			scoresCollectionRef
+				.orderBy("score", "desc")
+				.limit(1)
 				.get()
-				.then((docRef) => {
-					if (docRef.exists) {
-						setHighscore(docRef.data().score);
-						setHighscorePlayer(docRef.data().player);
+				.then((collectionRef) => {
+					if (collectionRef.docs.length > 0) {
+						const data = collectionRef.docs[0].data();
+						setHighscore(data.score);
+						setHighscorePlayer(data.player);
 					}
 				});
 		});
-	});
+		//eslint-disable-next-line
+	}, []);
 
 	useEffect(() => {
 		if (gameOver) {
-			if (currentScore > highscore) {
-				console.log("pratiic");
-				firestore
-					.collection("highscores")
-					.doc(`${gameTime}`)
-					.set({ score: currentScore, player: username })
-					.then((docRef) => {
-						console.log(docRef);
-					});
-			}
+			firestore
+				.collection("all-scores")
+				.doc(`${gameTime}`)
+				.collection("scores")
+				.add({ score: currentScore, player: username })
+				.then((docRef) => {
+					console.log(docRef);
+				});
 		}
 		//eslint-disable-next-line
 	}, [gameOver]);
@@ -80,35 +79,27 @@ const Game = ({ username, gameTime, resetGame }) => {
 		}
 	};
 
-	const playSound = () => {
-		// const touchSound = new Audio("../../assets/audio/touch-sound.mp3");
-		// touchSound.crossOrigin = "anonymus";
-
-		// const playPromise = touchSound.play();
-
-		// if (playPromise !== undefined) {
-		// 	playPromise
-		// 		.then((info) => {
-		// 			console.log(info);
-		// 		})
-		// 		.catch((error) => {
-		// 			console.log(error);
-		// 		});
-		// }
-
-		play();
-	};
-
 	const startCountdown = () => {
-		setInterval(() => {
-			if (time > 0) {
-				setTime(--time);
-			}
+		// const timeInterval = setInterval(() => {
+		// 	if (time > 0) {
+		// 		setTime(--time);
+		// 	}
 
-			if (time === 0) {
-				setGameOver(true);
-			}
-		}, 1000);
+		// 	if (time === 0) {
+		// 		setGameOver(true);
+		// 	}
+		// }, 1000);
+		setCountdownInterval(
+			setInterval(() => {
+				if (time > 0) {
+					setTime(--time);
+				}
+
+				if (time === 0) {
+					setGameOver(true);
+				}
+			}, 1000)
+		);
 	};
 
 	const showComment = () => {
@@ -136,6 +127,13 @@ const Game = ({ username, gameTime, resetGame }) => {
 		}
 	};
 
+	const replay = () => {
+		console.log(countdownInterval);
+		clearInterval(countdownInterval);
+		setTime(gameTime);
+		setCurrentScore(0);
+	};
+
 	return (
 		<div className="game">
 			<div className="wrapper">
@@ -157,7 +155,7 @@ const Game = ({ username, gameTime, resetGame }) => {
 							timer{" "}
 							<span className="countdown text-big">{time}</span>
 						</p>
-						<p className="current-score-container lighter margin-big">
+						<p className="current-score-container lighter">
 							{" "}
 							current score{" "}
 							<span className="current-score text-big">
@@ -165,13 +163,21 @@ const Game = ({ username, gameTime, resetGame }) => {
 							</span>
 						</p>
 						<div className="touch" onClick={handleTouchClick}></div>{" "}
-						<Link
-							to="/"
-							className="custom-button reset"
-							onClick={resetGame}
-						>
-							reset
-						</Link>
+						<div className="buttons">
+							<CustomButton handleButtonClick={replay}>
+								play again
+							</CustomButton>
+							<Link to="/highscores" className="custom-button">
+								highscores
+							</Link>
+							<Link
+								to="/"
+								className="custom-button reset"
+								onClick={resetGame}
+							>
+								reset
+							</Link>
+						</div>
 					</React.Fragment>
 				) : (
 					<React.Fragment>
