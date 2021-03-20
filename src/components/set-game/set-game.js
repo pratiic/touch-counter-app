@@ -30,18 +30,32 @@ const SetGame = ({
 	const handleFormSubmit = (event) => {
 		event.preventDefault();
 
-		if (username.length === 0 || time <= 0) {
+		const numberRegExp = /^[0-9]*$/;
+
+		const validNumber = numberRegExp.test(time);
+
+		if (username.length === 0 || time <= 0 || !validNumber) {
 			if (username.length === 0) {
 				setUsernameError(true);
 			} else {
 				setUsernameError(false);
 			}
 
-			if (time <= 0) {
-				setTimeError(true);
+			if (!validNumber) {
+				setTimeError("please enter a valid time");
+			} else if (!time) {
+				setTimeError("this field is required");
+			} else if (time === "0") {
+				setTimeError("time should be greater than 0");
 			} else {
-				setTimeError(false);
+				setTimeError("");
 			}
+
+			// if (time <= 0) {
+			// 	setTimeError("time should be greater than 0");
+			// } else {
+			// 	setTimeError("");
+			// }
 		} else {
 			setGame(username);
 			setGameUsername(username);
@@ -61,8 +75,8 @@ const SetGame = ({
 							onChange={handleUsernameChange}
 						/>
 						<label>username</label>
-						<small className={usernameError ? "show" : null}>
-							this field is required
+						<small>
+							{usernameError ? "this field is required" : null}
 						</small>
 					</div>
 					<div className="input-group">
@@ -72,9 +86,7 @@ const SetGame = ({
 							onChange={handleTimeChange}
 						/>
 						<label>time (in seconds)</label>
-						<small className={timeError ? "show" : null}>
-							this field is required
-						</small>
+						<small>{timeError}</small>
 					</div>
 					<CustomButton>play</CustomButton>
 				</form>
