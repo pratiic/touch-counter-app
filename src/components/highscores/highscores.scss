@@ -15,17 +15,19 @@
 	.highscore {
 		font-size: 1.85rem;
 		color: $color-text-muted;
-		width: fit-content;
+		width: 23rem;
 		margin: 0 auto 1rem auto;
 		border: 1px solid $color-blue;
 		border-radius: 5px;
 		padding: 0.4rem 0.7rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 
 		span {
 			color: $color-grey-lighter;
 
 			&:not(:last-child) {
-				margin-right: 10rem;
 				color: $color-text-muted;
 			}
 		}
