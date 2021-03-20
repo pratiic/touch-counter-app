@@ -139,37 +139,46 @@ const Game = ({ username, gameTime, resetGame }) => {
 			<div className="wrapper">
 				{time > 0 ? (
 					<React.Fragment>
-						<div className="highscore-container margin-small">
-							{highscore > 0 ? (
-								<React.Fragment>
-									high score in {gameTime} seconds
-									<span> {highscore}</span> by{" "}
-									<span>{highscorePlayer}</span>
-								</React.Fragment>
-							) : (
-								<p>no high score in {gameTime} seconds</p>
-							)}
+						<div className="info">
+							<div className="highscore-container">
+								{highscore > 0 ? (
+									<React.Fragment>
+										high score in {gameTime} seconds
+										<span> {highscore}</span> by{" "}
+										<span>{highscorePlayer}</span>
+									</React.Fragment>
+								) : (
+									<p>no high score in {gameTime} seconds</p>
+								)}
+							</div>
+							<p className="timer lighter">
+								{" "}
+								timer{" "}
+								<span className="countdown text-big">
+									{time}
+								</span>
+							</p>
+							<p className="current-score-container lighter">
+								{" "}
+								current score{" "}
+								<span className="current-score text-big">
+									{currentScore}
+								</span>
+							</p>
 						</div>
-						<p className="timer lighter margin-small">
-							{" "}
-							timer{" "}
-							<span className="countdown text-big">{time}</span>
-						</p>
-						<p className="current-score-container lighter">
-							{" "}
-							current score{" "}
-							<span className="current-score text-big">
-								{currentScore}
-							</span>
-						</p>
 						<div className="touch" onClick={handleTouchClick}></div>{" "}
 						<div className="buttons">
-							<CustomButton handleButtonClick={replay}>
-								play again
-							</CustomButton>
-							<Link to="/highscores" className="custom-button">
-								highscores
-							</Link>
+							<div className="buttons-upper">
+								<CustomButton handleButtonClick={replay}>
+									play again
+								</CustomButton>
+								<Link
+									to="/highscores"
+									className="custom-button"
+								>
+									highscores
+								</Link>
+							</div>
 							<Link
 								to="/"
 								className="custom-button reset"
@@ -181,32 +190,41 @@ const Game = ({ username, gameTime, resetGame }) => {
 					</React.Fragment>
 				) : (
 					<React.Fragment>
-						<p className="game-over text-big text-blue margin-smaller">
-							game over
-						</p>
-						<p className="total-score-container text-medium margin-smaller">
-							total score <span>{currentScore}</span>
-						</p>
-						<p className="game-over-high-score-container text-medium margin-smaller">
-							high score <span>{highscore}</span>
-						</p>
-						<p className="comment margin-big">{showComment()}</p>
-						{/* <CustomButton
-						handleButtonClick={handlePlayAgainButtonClick}
-					>
-						play again
-					</CustomButton> */}
-						<div className="buttons">
-							<Link
-								to="/"
-								className="custom-button reset"
-								onClick={resetGame}
-							>
-								reset
-							</Link>
-							<CustomButton handleButtonClick={replay}>
-								play again
-							</CustomButton>
+						<div className="gameover">
+							<div className="info">
+								<p className="game-over text-big text-blue margin-smaller">
+									game over
+								</p>
+								<p className="total-score-container text-medium margin-smaller">
+									total score <span>{currentScore}</span>
+								</p>
+								<p className="game-over-high-score-container text-medium margin-smaller">
+									high score <span>{highscore}</span>
+								</p>
+								<p className="comment margin-big">
+									{showComment()}
+								</p>
+							</div>
+							<div className="buttons">
+								<div className="buttons-upper">
+									<CustomButton handleButtonClick={replay}>
+										play again
+									</CustomButton>
+									<Link
+										to="/highscores"
+										className="custom-button"
+									>
+										highscores
+									</Link>
+								</div>
+								<Link
+									to="/"
+									className="custom-button reset"
+									onClick={resetGame}
+								>
+									reset
+								</Link>
+							</div>
 						</div>
 					</React.Fragment>
 				)}
