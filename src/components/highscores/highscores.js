@@ -26,7 +26,8 @@ const Highscores = ({ gameTime }) => {
 					}
 				});
 		});
-	});
+		//eslint-disable-next-line
+	}, []);
 
 	return (
 		<div className="highscores">
