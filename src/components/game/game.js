@@ -21,7 +21,7 @@ const Game = ({ username, gameTime, resetGame }) => {
 		thatsGood: "that's good, do better next time",
 		jesusChrist: "jesus christ, are you even trying?",
 		thatsGottaHurt: "that's gotta hurt",
-		thatsClose: "that's close, beat it next time man",
+		thatsNotGonnaDoIt: "that's not gonna go it",
 		highScoreBeats: [
 			"looks like you beat it, well done",
 			"attaboy, or are you a girl?",
@@ -38,24 +38,32 @@ const Game = ({ username, gameTime, resetGame }) => {
 			.doc(`${gameTime}`)
 			.collection("scores");
 
-		scoresCollectionRef.onSnapshot((snapshot) => {
-			scoresCollectionRef
-				.orderBy("score", "desc")
-				.limit(1)
-				.get()
-				.then((collectionRef) => {
-					if (collectionRef.docs.length > 0) {
-						const data = collectionRef.docs[0].data();
-						setHighscore(data.score);
-						setHighscorePlayer(data.player);
-					}
-				});
-		});
+		const unSubscribeFromCollection = scoresCollectionRef.onSnapshot(
+			(snapshot) => {
+				scoresCollectionRef
+					.orderBy("score", "desc")
+					.limit(1)
+					.get()
+					.then((collectionRef) => {
+						if (collectionRef.docs.length > 0) {
+							const data = collectionRef.docs[0].data();
+							setHighscore(data.score);
+							setHighscorePlayer(data.player);
+						}
+					});
+			}
+		);
+
+		return () => {
+			unSubscribeFromCollection();
+			clearInterval(countdownInterval);
+		};
 		//eslint-disable-next-line
 	}, []);
 
 	useEffect(() => {
 		if (gameOver) {
+			clearInterval(countdownInterval);
 			firestore
 				.collection("all-scores")
 				.doc(`${gameTime}`)
@@ -80,15 +88,6 @@ const Game = ({ username, gameTime, resetGame }) => {
 	};
 
 	const startCountdown = () => {
-		// const timeInterval = setInterval(() => {
-		// 	if (time > 0) {
-		// 		setTime(--time);
-		// 	}
-
-		// 	if (time === 0) {
-		// 		setGameOver(true);
-		// 	}
-		// }, 1000);
 		setCountdownInterval(
 			setInterval(() => {
 				if (time > 0) {
@@ -105,25 +104,23 @@ const Game = ({ username, gameTime, resetGame }) => {
 	const showComment = () => {
 		const difference = highscore - currentScore;
 
-		if (difference <= 0) {
+		if (difference < 0) {
 			const randomNum = Math.floor(Math.random() * 5);
 			return comments.highScoreBeats[randomNum];
-		}
-
-		if (difference > 250) {
-			return comments.jesusChrist;
-		} else if (difference > 150) {
-			return comments.notEvenClose;
-		} else if (difference > 100) {
-			return comments.youCanDoBetter;
+		} else if (difference === 0) {
+			return `${highscorePlayer} did it first, sorry`;
 		} else if (difference < 10) {
 			return comments.thatsGottaHurt;
-		} else if (difference < 40) {
-			return comments.thatsClose;
-		} else if (difference <= 50) {
+		} else if (difference < 30) {
 			return comments.thatsGood;
+		} else if (difference <= 50) {
+			return comments.thatsNotGonnaDoIt;
 		} else if (difference <= 100) {
 			return comments.goHomeAndPractice;
+		} else if (difference > 100) {
+			return comments.notEvenClose;
+		} else if (difference > 150) {
+			return comments.jesusChrist;
 		}
 	};
 
