@@ -35,7 +35,12 @@ const Highscores = ({ gameTime }) => {
 				{highscores.length > 0 ? (
 					highscores.map((highscore) => {
 						return (
-							<div className="highscore">
+							<div
+								className="highscore"
+								key={`${highscore.data().player}${
+									highscore.data().score
+								}${new Date().getTime()}`}
+							>
 								<span>{highscore.data().player}</span>
 								<span>{highscore.data().score}</span>
 							</div>

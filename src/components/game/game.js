@@ -104,11 +104,9 @@ const Game = ({ username, gameTime, resetGame }) => {
 	const showComment = () => {
 		const difference = highscore - currentScore;
 
-		if (difference < 0) {
+		if (difference <= 0) {
 			const randomNum = Math.floor(Math.random() * 5);
 			return comments.highScoreBeats[randomNum];
-		} else if (difference === 0) {
-			return `${highscorePlayer} did it first, sorry`;
 		} else if (difference < 10) {
 			return comments.thatsGottaHurt;
 		} else if (difference < 30) {
@@ -125,10 +123,10 @@ const Game = ({ username, gameTime, resetGame }) => {
 	};
 
 	const replay = () => {
-		console.log(countdownInterval);
 		clearInterval(countdownInterval);
 		setTime(gameTime);
 		setCurrentScore(0);
+		setGameOver(false);
 	};
 
 	return (
