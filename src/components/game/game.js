@@ -8,6 +8,7 @@ import {
 	firestore,
 	deleteFromCurrentPlayers,
 } from "../../firebase/firebase.utils";
+import { sortByTime } from "../highscores/highscores.utils";
 
 import CustomButton from "../../components/custom-button/custom-button";
 
@@ -18,6 +19,8 @@ const Game = ({ username, gameTime, resetGame }) => {
 	const [highscorePlayer, setHighscorePlayer] = useState("");
 	const [gameOver, setGameOver] = useState(false);
 	const [onlinePlayersNum, setOnlinePlayersNum] = useState(0);
+	const [onlinePlayers, setOnlinePlayers] = useState([]);
+	const [userId, setUserId] = useState(`${username}${new Date().getTime()}`);
 	const [comments] = useState({
 		notEvenClose: "come on man, that's not even close",
 		youCanDoBetter: "you can do better",
@@ -46,11 +49,12 @@ const Game = ({ username, gameTime, resetGame }) => {
 			(snapshot) => {
 				scoresCollectionRef
 					.orderBy("score", "desc")
-					.limit(1)
+					.limit(50)
 					.get()
 					.then((collectionRef) => {
 						if (collectionRef.docs.length > 0) {
-							const data = collectionRef.docs[0].data();
+							const sortedDocs = sortByTime(collectionRef.docs);
+							const data = sortedDocs[0].data();
 							setHighscore(data.score);
 							setHighscorePlayer(data.player);
 						}
@@ -62,22 +66,35 @@ const Game = ({ username, gameTime, resetGame }) => {
 			"current-players"
 		);
 
-		currentPlayersCollectionRef.doc(username).set({ username: username });
+		currentPlayersCollectionRef.doc(userId).set({
+			username: username,
+			gameTime: Number(gameTime),
+			currentScore: currentScore,
+		});
 
 		currentPlayersCollectionRef.onSnapshot((snapshot) => {
 			currentPlayersCollectionRef.get().then((collectionRef) => {
-				setOnlinePlayersNum(collectionRef.docs.length);
+				if (collectionRef.docs.length > 0) {
+					setOnlinePlayersNum(collectionRef.docs.length);
+				}
 			});
 		});
 
 		return () => {
 			unSubscribeFromCollection();
 			clearInterval(countdownInterval);
-			deleteFromCurrentPlayers(username);
+			deleteFromCurrentPlayers(userId);
 			console.log("pratiic");
 		};
 		//eslint-disable-next-line
 	}, []);
+
+	useEffect(() => {
+		firestore
+			.collection("current-players")
+			.doc(userId)
+			.update({ currentScore: currentScore });
+	}, [currentScore]);
 
 	useEffect(() => {
 		if (gameOver) {
@@ -86,7 +103,11 @@ const Game = ({ username, gameTime, resetGame }) => {
 				.collection("all-scores")
 				.doc(`${gameTime}`)
 				.collection("scores")
-				.add({ score: currentScore, player: username })
+				.add({
+					score: currentScore,
+					player: username,
+					createdAt: new Date().getTime(),
+				})
 				.then((docRef) => {
 					console.log(docRef);
 				});
@@ -166,6 +187,16 @@ const Game = ({ username, gameTime, resetGame }) => {
 							</div>
 							{/* <p className="online-players">
 								online players <span>{onlinePlayersNum}</span>
+								{onlinePlayersNum <= 1 ? (
+									<span>(you)</span>
+								) : (
+									<Link
+										to="/online-players"
+										className="custom-button custom-button-smallest"
+									>
+										view here
+									</Link>
+								)}
 							</p> */}
 							<p className="timer lighter">
 								{" "}

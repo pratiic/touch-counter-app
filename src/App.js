@@ -4,10 +4,13 @@ import { connect } from "react-redux";
 
 import "./App.scss";
 
+import { firestore } from "./firebase/firebase.utils";
+
 import Header from "./components/header/header";
 import SetGame from "./components/set-game/set-game";
 import Game from "./components/game/game";
 import Highscores from "./components/highscores/highscores";
+import OnlinePlayers from "./components/online-players/online-players";
 
 const App = ({ username, gameTime }) => {
 	const [gameSet, setGameSet] = useState(false);
@@ -16,6 +19,12 @@ const App = ({ username, gameTime }) => {
 
 	useEffect(() => {
 		setGameSet(false);
+
+		return () => {
+			firestore
+				.collection("test-collection-one")
+				.add({ name: "pratik12345" });
+		};
 	}, []);
 
 	const setGame = () => {
@@ -51,6 +60,9 @@ const App = ({ username, gameTime }) => {
 					</Route>
 					<Route path="/highscores">
 						{gameSet ? <Highscores /> : <Redirect to="/" />}
+					</Route>
+					<Route path="/online-players">
+						{gameSet ? <OnlinePlayers /> : <Redirect to="/" />}
 					</Route>
 				</Switch>
 			</BrowserRouter>

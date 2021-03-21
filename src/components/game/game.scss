@@ -18,6 +18,7 @@
 	.highscore-container {
 		font-size: 1.75rem;
 		color: $color-text-muted;
+		margin-bottom: 0.8rem;
 
 		span {
 			color: $color-blue;
@@ -25,11 +26,16 @@
 	}
 
 	.online-players {
-		font-size: 1.55rem;
 		margin-bottom: 2.5rem;
+		color: $color-text-muted;
 
 		span {
 			color: $color-blue;
+			margin-right: 0.75rem;
+		}
+
+		a {
+			font-size: 1.35rem;
 		}
 	}
 
