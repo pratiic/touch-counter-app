@@ -66,7 +66,7 @@ const SetGame = ({
 	return (
 		<div className="set-game">
 			<div className="wrapper">
-				<form onSubmit={handleFormSubmit}>
+				{/* <form onSubmit={handleFormSubmit}>
 					<p className="title">fill this out to start the game</p>
 					<div className="input-group">
 						<input
@@ -89,7 +89,11 @@ const SetGame = ({
 						<small>{timeError}</small>
 					</div>
 					<CustomButton>play</CustomButton>
-				</form>
+				</form> */}
+				<p className="update-notice">
+					the website is getting an update, come back in a few hours,
+					sorry for the shut down
+				</p>
 			</div>
 		</div>
 	);

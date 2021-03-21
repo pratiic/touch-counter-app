@@ -14,7 +14,7 @@ const Header = ({ username, resetGame }) => {
 				<p className="title" onClick={handleTitleClick}>
 					touch counter
 				</p>
-				<p className="username">{username}</p>
+				<p className="username dot-dot-dot">{username}</p>
 			</div>
 		</div>
 	);

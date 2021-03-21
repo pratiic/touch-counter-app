@@ -4,7 +4,10 @@ import { connect } from "react-redux";
 
 import "./game.scss";
 
-import { firestore } from "../../firebase/firebase.utils";
+import {
+	firestore,
+	deleteFromCurrentPlayers,
+} from "../../firebase/firebase.utils";
 
 import CustomButton from "../../components/custom-button/custom-button";
 
@@ -14,6 +17,7 @@ const Game = ({ username, gameTime, resetGame }) => {
 	const [highscore, setHighscore] = useState(0);
 	const [highscorePlayer, setHighscorePlayer] = useState("");
 	const [gameOver, setGameOver] = useState(false);
+	const [onlinePlayersNum, setOnlinePlayersNum] = useState(0);
 	const [comments] = useState({
 		notEvenClose: "come on man, that's not even close",
 		youCanDoBetter: "you can do better",
@@ -54,9 +58,23 @@ const Game = ({ username, gameTime, resetGame }) => {
 			}
 		);
 
+		const currentPlayersCollectionRef = firestore.collection(
+			"current-players"
+		);
+
+		currentPlayersCollectionRef.doc(username).set({ username: username });
+
+		currentPlayersCollectionRef.onSnapshot((snapshot) => {
+			currentPlayersCollectionRef.get().then((collectionRef) => {
+				setOnlinePlayersNum(collectionRef.docs.length);
+			});
+		});
+
 		return () => {
 			unSubscribeFromCollection();
 			clearInterval(countdownInterval);
+			deleteFromCurrentPlayers(username);
+			console.log("pratiic");
 		};
 		//eslint-disable-next-line
 	}, []);
@@ -146,6 +164,9 @@ const Game = ({ username, gameTime, resetGame }) => {
 									<p>no high score in {gameTime} seconds</p>
 								)}
 							</div>
+							{/* <p className="online-players">
+								online players <span>{onlinePlayersNum}</span>
+							</p> */}
 							<p className="timer lighter">
 								{" "}
 								timer{" "}

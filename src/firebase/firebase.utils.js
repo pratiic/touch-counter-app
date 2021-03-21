@@ -15,3 +15,9 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 export const firestore = firebase.firestore();
+
+export const deleteFromCurrentPlayers = (userId) => {
+	const currentPlayersCollectionRef = firestore.collection("current-players");
+
+	currentPlayersCollectionRef.doc(userId).delete();
+};
