@@ -90,6 +90,10 @@ const SetGame = ({
 					</div>
 					<CustomButton>play</CustomButton>
 				</form>
+				<p className="score-reset-info">
+					if you don't see your score, its because the database was
+					reset because of some changes
+				</p>
 			</div>
 		</div>
 	);

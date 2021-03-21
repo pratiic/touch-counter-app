@@ -62,6 +62,10 @@ const Highscores = ({ gameTime }) => {
 				<Link to="/game" className="custom-button">
 					back to game
 				</Link>
+				<p className="score-reset-info">
+					if you don't see your score, its because the database was
+					reset because of some changes
+				</p>
 			</div>
 		</div>
 	);
