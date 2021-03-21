@@ -23,37 +23,42 @@ const Highscores = ({ gameTime }) => {
 				.get()
 				.then((collectionRef) => {
 					if (collectionRef.docs.length > 0) {
-						const sortedDocs = sortByTime(collectionRef.docs);
-						setHighscores(sortedDocs);
+						// const sortedDocs = sortByTime(collectionRef.docs);
+						setHighscores(collectionRef.docs);
 					}
 				});
 		});
 		//eslint-disable-next-line
 	}, []);
 
+	const renderHighscores = () => {
+		for (
+			let i = 0;
+			i < (highscores.length >= 3 ? 3 : highscores.length);
+			i++
+		) {
+			return (
+				<div
+					className="highscore"
+					key={`${highscores[i].data().player}${
+						highscores[i].data().score
+					}${new Date().getTime()}`}
+				>
+					<span className="dot-dot-dot">
+						{highscores[i].data().player}
+					</span>
+					<span>{highscores[i].data().score}</span>
+				</div>
+			);
+		}
+	};
+
 	return (
 		<div className="highscores">
 			<div className="wrapper">
 				<div className="title">top 3 scores</div>
 				{highscores.length > 0 ? (
-					[highscores[0], highscores[1], highscores[2]].map(
-						(highscore) => {
-							console.log(highscore);
-							return (
-								<div
-									className="highscore"
-									key={`${highscore.data().player}${
-										highscore.data().score
-									}${new Date().getTime()}`}
-								>
-									<span className="dot-dot-dot">
-										{highscore.data().player}
-									</span>
-									<span>{highscore.data().score}</span>
-								</div>
-							);
-						}
-					)
+					renderHighscores()
 				) : (
 					<p className="alternate">
 						no high score in {gameTime} seconds
