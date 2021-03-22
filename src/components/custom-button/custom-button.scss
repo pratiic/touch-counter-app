@@ -5,11 +5,11 @@
 	outline: none;
 	border: 1px solid $color-blue;
 	font-size: inherit;
-	font-family: inherit;
+	font-family: $font-stack-secondary;
 	color: $color-grey-lighter;
 	padding: 0.3rem 1.75rem;
 	border-radius: 5px;
-	text-transform: capitalize;
+	text-transform: lowercase;
 	cursor: pointer;
 	width: 100%;
 	display: flex;

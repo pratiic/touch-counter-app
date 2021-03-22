@@ -250,18 +250,14 @@ const Game = ({ username, gameTime, resetGame }) => {
 					<React.Fragment>
 						<div className="gameover">
 							<div className="info">
-								<p className="game-over text-big text-blue margin-smaller">
-									game over
-								</p>
-								<p className="total-score-container text-medium margin-smaller">
+								<p className="title">game over</p>
+								<p className="total-score-container">
 									total score <span>{currentScore}</span>
 								</p>
-								<p className="game-over-high-score-container text-medium margin-smaller">
+								<p className="game-over-high-score-container">
 									high score <span>{highscore}</span>
 								</p>
-								<p className="comment margin-big">
-									{showComment()}
-								</p>
+								<p className="comment">{showComment()}</p>
 							</div>
 							<div className="buttons">
 								<div className="buttons-upper">

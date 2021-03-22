@@ -4,12 +4,13 @@
 	padding: 0.5rem 0 0 0;
 	text-align: center;
 	color: $color-grey-lighter;
+	font-family: $font-stack-secondary;
 
 	.title {
 		font-size: 3rem;
 		color: $color-blue;
 		text-transform: capitalize;
-		margin-bottom: 1.5rem;
+		margin-bottom: 2.5rem;
 	}
 
 	.highscore {
