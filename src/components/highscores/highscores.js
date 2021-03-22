@@ -9,6 +9,9 @@ import { sortByTime } from "./highscores.utils";
 
 const Highscores = ({ gameTime }) => {
 	const [highscores, setHighscores] = useState([]);
+	const [highscoresMessage, setHighscoresMessage] = useState(
+		"loading highscores..."
+	);
 
 	useEffect(() => {
 		const scoresCollectionRef = firestore
@@ -23,8 +26,12 @@ const Highscores = ({ gameTime }) => {
 				.get()
 				.then((collectionRef) => {
 					if (collectionRef.docs.length > 0) {
-						// const sortedDocs = sortByTime(collectionRef.docs);
-						setHighscores(collectionRef.docs);
+						const sortedDocs = sortByTime(collectionRef.docs);
+						setHighscores(sortedDocs);
+					} else {
+						setHighscoresMessage(
+							`no highscore in ${gameTime} seconds`
+						);
 					}
 				});
 		});
@@ -32,25 +39,16 @@ const Highscores = ({ gameTime }) => {
 	}, []);
 
 	const renderHighscores = () => {
-		for (
-			let i = 0;
-			i < (highscores.length >= 3 ? 3 : highscores.length);
-			i++
-		) {
+		return highscores.map((highscore) => {
 			return (
-				<div
-					className="highscore"
-					key={`${highscores[i].data().player}${
-						highscores[i].data().score
-					}${new Date().getTime()}`}
-				>
+				<div className="highscore" key={highscore.id}>
 					<span className="dot-dot-dot">
-						{highscores[i].data().player}
+						{highscore.data().player}
 					</span>
-					<span>{highscores[i].data().score}</span>
+					<span>{highscore.data().score}</span>
 				</div>
 			);
-		}
+		});
 	};
 
 	return (
@@ -60,9 +58,7 @@ const Highscores = ({ gameTime }) => {
 				{highscores.length > 0 ? (
 					renderHighscores()
 				) : (
-					<p className="alternate">
-						no high score in {gameTime} seconds
-					</p>
+					<p className="alternate">{highscoresMessage}</p>
 				)}
 				<Link to="/game" className="custom-button">
 					back to game

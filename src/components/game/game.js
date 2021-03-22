@@ -21,6 +21,9 @@ const Game = ({ username, gameTime, resetGame }) => {
 	const [onlinePlayersNum, setOnlinePlayersNum] = useState(0);
 	const [onlinePlayers, setOnlinePlayers] = useState([]);
 	const [userId, setUserId] = useState(`${username}${new Date().getTime()}`);
+	const [highscoreMessage, setHighscoreMessage] = useState(
+		"loading highscore..."
+	);
 	const [comments] = useState({
 		notEvenClose: "come on man, that's not even close",
 		youCanDoBetter: "you can do better",
@@ -57,6 +60,10 @@ const Game = ({ username, gameTime, resetGame }) => {
 							const data = sortedDocs[0].data();
 							setHighscore(data.score);
 							setHighscorePlayer(data.player);
+						} else {
+							setHighscoreMessage(
+								`no highscore in ${gameTime} seconds`
+							);
 						}
 					});
 			}
@@ -182,7 +189,7 @@ const Game = ({ username, gameTime, resetGame }) => {
 										<span>{highscorePlayer}</span>
 									</React.Fragment>
 								) : (
-									<p>no high score in {gameTime} seconds</p>
+									<p>{highscoreMessage}</p>
 								)}
 							</div>
 							{/* <p className="online-players">
@@ -201,11 +208,15 @@ const Game = ({ username, gameTime, resetGame }) => {
 							<p className="timer lighter">
 								{" "}
 								timer{" "}
-								<span className="countdown text-big">
+								<span
+									className={`countdown text-big ${
+										time <= 5 ? "time-finish" : ""
+									}`}
+								>
 									{time}
 								</span>
 							</p>
-							<p className="current-score-container lighter">
+							<p className={`current-score-container lighter`}>
 								{" "}
 								current score{" "}
 								<span className="current-score text-big">

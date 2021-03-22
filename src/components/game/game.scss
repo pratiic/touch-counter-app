@@ -4,7 +4,7 @@
 	color: $color-text-muted;
 	font-size: 2rem;
 	text-transform: capitalize;
-	margin-top: 1.5rem;
+	margin-top: 1rem;
 	text-align: center;
 
 	.wrapper {
@@ -45,6 +45,10 @@
 
 		.countdown {
 			color: $color-blue;
+
+			&.time-finish {
+				color: $color-google-red;
+			}
 		}
 	}
 

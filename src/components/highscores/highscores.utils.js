@@ -14,5 +14,9 @@ export const sortByTime = (docs) => {
 			}
 		}
 	}
-	return docs;
+	if (docs.length >= 3) {
+		return [docs[0], docs[1], docs[2]];
+	} else {
+		return docs;
+	}
 };
