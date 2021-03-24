@@ -3,13 +3,13 @@ import "firebase/auth";
 import "firebase/firestore";
 
 const firebaseConfig = {
-	apiKey: "AIzaSyDX7PUXGlL4yZ07SNzP_o68pDvlraa3Vvg",
-	authDomain: "touch-counter.firebaseapp.com",
-	projectId: "touch-counter",
-	storageBucket: "touch-counter.appspot.com",
-	messagingSenderId: "774417227682",
-	appId: "1:774417227682:web:380fa05a0c538b32505cfb",
-	measurementId: "G-5ZRQ1KMWNQ",
+	apiKey: "AIzaSyCUR846_J9n0XpZK9tS4z07gY7QZqAzyzQ",
+	authDomain: "touch-counter-2493a.firebaseapp.com",
+	projectId: "touch-counter-2493a",
+	storageBucket: "touch-counter-2493a.appspot.com",
+	messagingSenderId: "690659440642",
+	appId: "1:690659440642:web:5191c47c510db82eae0f1b",
+	measurementId: "G-Q2ZLYL2R7Q",
 };
 
 firebase.initializeApp(firebaseConfig);
